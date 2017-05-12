@@ -12,7 +12,7 @@ function app(people){
     mainMenu(person, people);
     break;
     case 'no':
-    var person = searchByTrait(people);
+    var person = executeSearch(people);
     mainMenu(person, people);
     break;
     default:
@@ -67,10 +67,60 @@ function searchByName(people){
     }
   }
 }
-function searchByTrait(people){
-  var trait = promptFor(
-}
+function executeSearch(people) {
 
+function searchByTrait(people){
+  var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a '0'.",chars);
+  var searchByTrait = searchValue.split(",");
+  return searchByTrait;
+}
+function executeSearchHeight(people,searchCrit) {
+  var listOfPeople = people;
+    if (searchCrit[1] == 0) {
+      return listOfPeople;
+    }
+    else {
+  var newList = listOfPeople.filter(function(person){ return person.height == searchCrit[1]});
+    return newList;
+  }
+}
+function executeSearchWeight(newList,searchCrit) {
+  var listOfPeople = newList;
+  if (searchCrit[2] == 0) {
+    return listOfPeople;
+  }
+  else {
+  var newList = listOfPeople.filter(function(person){ return person.weight == searchCrit[2]});
+    return newList;
+  }
+}
+function executeSearchOccupation(newList,searchCrit) {
+  var listOfPeople = newList;
+  if (searchCrit[3] == 0) {
+    return listOfPeople;
+  }
+  else {
+  var newList = listOfPeople.filter(function(person){ return person.occupation == searchCrit[3]});
+    return newList;
+  }
+}
+function executeSearchEyeColor(newList,searchCrit) {
+  var listOfPeople = newList;
+  if (searchCrit[1] == 0) {
+    return listOfPeople;
+  }
+  else {
+  var newList = listOfPeople.filter(function(person){ return person.eyeColor == searchCrit[4]});
+    return newList;
+  }
+}
+var searchCrit = searchByTrait(people);
+var round1 = executeSearchHeight(people,searchCrit);
+var round2 = executeSearchWeight(round1,searchCrit);
+var round3 = executeSearchOccupation(round2,searchCrit);
+var newList = executeSearchEyeColor(round3,searchCrit);
+return newList;
+}
 //---------------------------------------displaying the array--------------------------------------------------------//
 
 // alerts a list of people
