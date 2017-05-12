@@ -1,6 +1,7 @@
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
+//----------------------------------------initial prompt-------------------------------------------------------------//
 
 // app is the function called to start the entire application
 function app(people){
@@ -11,14 +12,16 @@ function app(people){
     mainMenu(person, people);
     break;
     case 'no':
-    var person = searchByTrait();
-    return person;
+    var person = searchByTrait(people);
+    mainMenu(person, people);
     break;
     default:
     app(people); // restart app
     break;
   }
 }
+
+//---------------------------------------prompt after person found---------------------------------------------------//
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -52,6 +55,8 @@ function mainMenu(person, people){
   }
 }
 
+//---------------------------------------search function-------------------------------------------------------------//
+
 function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
@@ -62,6 +67,12 @@ function searchByName(people){
     }
   }
 }
+function searchByTrait(people){
+  var trait = promptFor(
+}
+
+//---------------------------------------displaying the array--------------------------------------------------------//
+
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
@@ -77,6 +88,8 @@ function displayPerson(person){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
+
+//---------------------------------------prompt functions------------------------------------------------------------//
 
 // function that prompts and validates user input (can be used as a prompt for any new input inquiries)
 function promptFor(question, valid){
