@@ -12,7 +12,28 @@ function app(people){
     mainMenu(person, people);
     break;
     case 'no':
-    var person = executeSearch(people);
+    var filteredPeople = executeSearch(people);
+    var person = narrowItDown(filteredPeople);
+
+    function narrowItDown(filteredPeople,listOfNames) {
+      var allNames = allNames(filteredPeople);
+      function allNames(filteredPeople) {
+        for (var i = 0; i < filteredPeople.length; i++) {
+          var listOfNames = (filteredPeople[i].firstName + " " + filteredPeople[i].lastName + "\n" + listOfNames);
+        }
+        listOfNames= listOfNames.slice(listOfNames.lenght,(listOfNames.length-10));
+        return listOfNames;
+      }
+      var pickTheOne = prompt("Here is everyone who matched your search: " + "\n" + allNames + "\n" + "Pick the Person you are looking for by their first name.", "First Name Here")
+      for (var i = 0; i < filteredPeople.length;)
+      if (pickTheOne == filteredPeople[i].firstName) {
+        var person = filteredPeople[i];
+        return person;
+      }
+      else {
+        i++;
+      }
+    }
     mainMenu(person, people);
     break;
     default:
@@ -32,7 +53,6 @@ function mainMenu(person, people){
     alert("Could not find that individual.");
     return app(people); // restart
   }
-
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
@@ -55,7 +75,7 @@ function mainMenu(person, people){
   }
 }
 
-//---------------------------------------search function-------------------------------------------------------------//
+//-------------------------------------------search Name function----------------------------------------------------//
 
 function searchByName(people){
   var firstName = promptFor("What is the person's first name?", chars);
@@ -67,14 +87,17 @@ function searchByName(people){
     }
   }
 }
+
+//------------------------------------------Search Trait Function---------------------------------------------------//
+
 function executeSearch(people) {
 
-function searchByTrait(people){
+function searchByTrait(people){                    //gets the search peramiters from user.
   var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a '0'.",chars);
   var searchByTrait = searchValue.split(",");
   return searchByTrait;
 }
-function executeSearchHeight(people,searchCrit) {
+function executeSearchHeight(people,searchCrit) { //height filter; returns list.
   var listOfPeople = people;
     if (searchCrit[1] == 0) {
       return listOfPeople;
@@ -84,7 +107,7 @@ function executeSearchHeight(people,searchCrit) {
     return newList;
   }
 }
-function executeSearchWeight(newList,searchCrit) {
+function executeSearchWeight(newList,searchCrit) { //weight filter; returns updated list.
   var listOfPeople = newList;
   if (searchCrit[2] == 0) {
     return listOfPeople;
@@ -94,7 +117,7 @@ function executeSearchWeight(newList,searchCrit) {
     return newList;
   }
 }
-function executeSearchOccupation(newList,searchCrit) {
+function executeSearchOccupation(newList,searchCrit) { //occupation filter; returns updated list.
   var listOfPeople = newList;
   if (searchCrit[3] == 0) {
     return listOfPeople;
@@ -104,9 +127,9 @@ function executeSearchOccupation(newList,searchCrit) {
     return newList;
   }
 }
-function executeSearchEyeColor(newList,searchCrit) {
+function executeSearchEyeColor(newList,searchCrit) { //eye color filter; returns updated list.
   var listOfPeople = newList;
-  if (searchCrit[1] == 0) {
+  if (searchCrit[4] == 0) {
     return listOfPeople;
   }
   else {
@@ -115,11 +138,12 @@ function executeSearchEyeColor(newList,searchCrit) {
   }
 }
 var searchCrit = searchByTrait(people);
-var round1 = executeSearchHeight(people,searchCrit);
-var round2 = executeSearchWeight(round1,searchCrit);
-var round3 = executeSearchOccupation(round2,searchCrit);
-var newList = executeSearchEyeColor(round3,searchCrit);
-return newList;
+var heightSearch = executeSearchHeight(people,searchCrit);
+var weightSearch = executeSearchWeight(heightSearch,searchCrit);
+var occupationSearch = executeSearchOccupation(weightSearch,searchCrit);
+var filteredPeople = executeSearchEyeColor(occupationSearch,searchCrit);
+
+return filteredPeople;
 }
 //---------------------------------------displaying the array--------------------------------------------------------//
 
