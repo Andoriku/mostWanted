@@ -37,10 +37,10 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    displayPerson(person);
+    displayPersonInfo(person);
     break;
     case "family":
-    // TODO: get person's family
+    displayPersonFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -130,13 +130,53 @@ function displayPeople(people){
   }).join("\n"));
 }
 
-function displayPerson(person){
+function displayPersonInfo(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + person.firstName + "\n";
+  var personInfo = "PERSON INFORMATION" + "\n" + "ID: " + person.id + "\n";
+  personInfo += "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Date of Birth: " + person.dob + "\n";
+  personInfo += "Height: " + person.height  + "\"" + "\n";
+  personInfo += "Weight: " + person.weight + " Lbs" + "\n"; 
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
+}
+
+function displayPersonFamily(person, people){
+  var personFamily =  "PERSON FAMILY" + "\n";
+  var spouseIdName = getSpouse(person, people);
+  personFamily += person.firstName + "\'s " + "spouse is " + spouseIdName + "\n";
+  var childName = getChildName(person, people);
+    if (childName == undefined){
+       var noChildren = "This person does not have children.";
+     } else {
+        personFamily += person.firstName + "\'s " + "child is " + childName + "\n";
+          }
+           
+  alert(personFamily);
+}
+
+function getSpouse(person, people) {
+  for (var i = 0; i < people.length; i++){
+     if ((person.currentSpouse) === (people[i].id)) {
+        var spouseIdName = (people[i].firstName + " " + people[i].lastName);
+    } 
+  }
+  return spouseIdName;
+}
+
+function getChildName (person, people) {
+  for (var i = 0; i < people.length; i++){
+    if ((person.id) === (people[i].parents[0] || people[i].parents[1])) {
+      var childName = (people[i].firstName + " " + people[i].lastName);
+   }
+  }
+  return childName;
 }
 
 //---------------------------------------prompt functions------------------------------------------------------------//
@@ -158,3 +198,8 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+
+
+
+
