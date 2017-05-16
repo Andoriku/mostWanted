@@ -21,7 +21,7 @@ function app(people){
         for (var i = 0; i < filteredPeople.length; i++) {
           var listOfNames = (filteredPeople[i].firstName + " " + filteredPeople[i].lastName + "\n" + listOfNames);
         }
-        listOfNames= listOfNames.slice(listOfNames.lenght,(listOfNames.length-10));
+        listOfNames= listOfNames.slice(listOfNames.length,(listOfNames.length-10));
         return listOfNames;
       }
       var pickTheOne = prompt("Here is everyone who matched your search: " + "\n" + allNames + "\n" + "Pick the Person you are looking for by their first name.", "First Name Here")
@@ -54,17 +54,18 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendents'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-    displayPersonInfo(person);
+    displayPersonInfo(person, people);
     break;
     case "family":
     displayPersonFamily(person, people);
     break;
-    case "descendants":
-    // TODO: get person's descendants
+    case "descendents":
+    displayDescendents(person, people);
+    return mainMenu(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -198,10 +199,10 @@ function displayPeople(people){
   }).join("\n"));
 }
 
-function displayPersonInfo(person){
+function displayPersonInfo(person, people){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "PERSON INFORMATION" + "\n" + "ID: " + person.id + "\n";
+  var personInfo = person.firstName + " " + person.lastName + "\'s information" + "\n" + "\n" + "ID: " + person.id + "\n" ;
   personInfo += "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender: " + person.gender + "\n";
@@ -213,6 +214,7 @@ function displayPersonInfo(person){
 
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
+  mainMenu(person, people);
 }
 
 function displayPersonFamily(person, people) {
@@ -243,6 +245,7 @@ function displayPersonFamily(person, people) {
         personFamily += person.firstName + "\'s " + "sibling(s) are" + siblingNameArray.toString() + "." + "\n";
       }
   alert(personFamily);
+  mainMenu(person, people);
 }
 
 function getSpouse(person, people) {
@@ -279,6 +282,27 @@ function getSiblings (person, people) {
     } return siblingNameArray;
   }
 
+function displayDescendents(person, people){
+  function findDescendents(person, people) {
+    var filteredDescendents = people.filter(function(getdescendents, i, people) {
+        if (person.id === people[i].parents[0]) {
+          return (people[i].firstName + " " + people[i].lastName);
+          } else if (person.id === people[i].parents[1]){ 
+              return (people[i].firstName + " " + people[i].lastName);
+          } else {
+            i++;
+          }
+      });
+            var descendents = []
+             for(var i = 0; i < filteredDescendents.length; i++) {
+              var descendentNames = " " + filteredDescendents[i].firstName + " " + filteredDescendents[i].lastName;
+              descendents.push(descendentNames);
+                  }
+               return descendents;
+    }
+      var descendents = findDescendents(person, people);
+      alert("These are " + person.firstName + "\'s descendents: " + "\n" + descendents);
+}
 //---------------------------------------prompt functions------------------------------------------------------------//
 
 // function that prompts and validates user input (can be used as a prompt for any new input inquiries)
