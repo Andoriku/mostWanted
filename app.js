@@ -266,7 +266,11 @@ function getChildName (person, people) {
 function getSiblings (person, people) {
   var siblingNameArray = []
   for (var i = 0; i < people.length; i++){
-      if ((person.parents[0] || person.parents[1]) === (people[i].parents[0] || people[i].parents[1])){
+    if (person.parents.length ===  0) {
+        siblingNameArray = undefined;
+        return siblingNameArray;
+    }
+     else if ((person.parents[0] || person.parents[1]) === (people[i].parents[0] || people[i].parents[1])){
           if(person.id !== people[i].id) {
             siblingNameArray.push(" " + people[i].firstName + " " + people[i].lastName);
 
