@@ -69,14 +69,50 @@ function searchByName(people){
 }
 function executeSearch(people) {
 
+
 function searchByTrait(people){
   var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a '0'.",chars);
   var searchByTrait = searchValue.split(",");
   return searchByTrait;
 }
 function executeSearchHeight(people,searchCrit) {
+
+function searchByTrait(people){                    //gets the search peramiters from user.
+  var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a 'n/a' or '0'.",chars);
+  var searchByTrait = searchValue.split(",");
+  return searchByTrait;
+}
+
+//-----------------------------------------------Search Age -------------------------------------------------------//
+
+function executeSearchAge(people,searchCrit) { //height filter; returns list.
+
   var listOfPeople = people;
-    if (searchCrit[1] == 0) {
+    if (searchCrit[0] == "0") {
+      return listOfPeople;
+    }
+    else {
+    var newList = listOfPeople.filter(function(findAge,i,people){
+                    var birthday = new Date(people[i].dob);
+                    var today = new Date();
+                    var difference = today - birthday;
+                    var age = (Math.floor(difference/31557600000));
+                    if (age == searchCrit[0]) {
+                      return people[i];
+                    }
+                    else {
+                      i++;
+                    }
+                  });
+    return newList;
+}
+}
+
+//-----------------------------------------------Search Age -------------------------------------------------------//
+
+function executeSearchHeight(newList,searchCrit) { //height filter; returns list.
+  var listOfPeople = newList;
+    if (searchCrit[1] == "0") {
       return listOfPeople;
     }
     else {
@@ -86,7 +122,7 @@ function executeSearchHeight(people,searchCrit) {
 }
 function executeSearchWeight(newList,searchCrit) {
   var listOfPeople = newList;
-  if (searchCrit[2] == 0) {
+  if (searchCrit[2] == "0") {
     return listOfPeople;
   }
   else {
@@ -96,7 +132,7 @@ function executeSearchWeight(newList,searchCrit) {
 }
 function executeSearchOccupation(newList,searchCrit) {
   var listOfPeople = newList;
-  if (searchCrit[3] == 0) {
+  if (searchCrit[3] == "0") {
     return listOfPeople;
   }
   else {
@@ -106,7 +142,8 @@ function executeSearchOccupation(newList,searchCrit) {
 }
 function executeSearchEyeColor(newList,searchCrit) {
   var listOfPeople = newList;
-  if (searchCrit[1] == 0) {
+  if (searchCrit[4] == "0") {
+
     return listOfPeople;
   }
   else {
@@ -115,11 +152,14 @@ function executeSearchEyeColor(newList,searchCrit) {
   }
 }
 var searchCrit = searchByTrait(people);
-var round1 = executeSearchHeight(people,searchCrit);
-var round2 = executeSearchWeight(round1,searchCrit);
-var round3 = executeSearchOccupation(round2,searchCrit);
-var newList = executeSearchEyeColor(round3,searchCrit);
-return newList;
+var ageSearch = executeSearchAge(people,searchCrit);
+var heightSearch = executeSearchHeight(ageSearch,searchCrit);
+var weightSearch = executeSearchWeight(heightSearch,searchCrit);
+var occupationSearch = executeSearchOccupation(weightSearch,searchCrit);
+var filteredPeople = executeSearchEyeColor(occupationSearch,searchCrit);
+
+return filteredPeople;
+
 }
 //---------------------------------------displaying the array--------------------------------------------------------//
 
@@ -139,7 +179,7 @@ function displayPersonInfo(person){
   personInfo += "Gender: " + person.gender + "\n";
   personInfo += "Date of Birth: " + person.dob + "\n";
   personInfo += "Height: " + person.height  + "\"" + "\n";
-  personInfo += "Weight: " + person.weight + " Lbs" + "\n"; 
+  personInfo += "Weight: " + person.weight + " Lbs" + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
 
@@ -164,6 +204,7 @@ function displayPersonFamily(person, people) {
         personFamily += noChild;
       } else {
         personFamily += person.firstName + "\'s " + "child is " + childName + "\n";
+
       }
 
   var siblingNameArray = getSiblings(person, people);
@@ -173,7 +214,7 @@ function displayPersonFamily(person, people) {
       } else {
         personFamily += person.firstName + "\'s " + "sibling(s) are" + siblingNameArray.toString() + "." + "\n";
       }
-
+          }
   alert(personFamily);
 }
 
@@ -181,7 +222,7 @@ function getSpouse(person, people) {
   for (var i = 0; i < people.length; i++){
      if ((person.currentSpouse) === (people[i].id)) {
         var spouseIdName = (people[i].firstName + " " + people[i].lastName);
-    } 
+    }
   }
   return spouseIdName;
 }
@@ -228,6 +269,7 @@ function chars(input){
 }
 
 
-//-----------------------------------Get Info Functions-----------------------------------------------------------------//
+
+
 
 
