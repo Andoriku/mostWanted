@@ -14,8 +14,7 @@ function app(people){
     case 'no':
     var filteredPeople = executeSearch(people);
     var person = narrowItDown(filteredPeople);
-
-    function narrowItDown(filteredPeople,listOfNames) {
+      function narrowItDown(filteredPeople,listOfNames) {
       var allNames = allNames(filteredPeople);
       function allNames(filteredPeople) {
         for (var i = 0; i < filteredPeople.length; i++) {
@@ -90,7 +89,6 @@ function searchByName(people){
   }
 }
 function executeSearch(people) {
-
 function searchByTrait(people){                    //gets the search peramiters from user.
   var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a 'n/a' or '0'.",chars);
   var searchByTrait = searchValue.split(",");
@@ -100,7 +98,6 @@ function searchByTrait(people){                    //gets the search peramiters 
 //-----------------------------------------------Search Age -------------------------------------------------------//
 
 function executeSearchAge(people,searchCrit) { //height filter; returns list.
-
   var listOfPeople = people;
     if (searchCrit[0] == "0") {
       return listOfPeople;
@@ -169,7 +166,6 @@ function executeSearchOccupation(newList,searchCrit) {
 function executeSearchEyeColor(newList,searchCrit) {
   var listOfPeople = newList;
   if (searchCrit[4] == "0") {
-
     return listOfPeople;
   }
   else {
