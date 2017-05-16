@@ -93,13 +93,40 @@ function searchByName(people){
 function executeSearch(people) {
 
 function searchByTrait(people){                    //gets the search peramiters from user.
-  var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a '0'.",chars);
+  var searchValue = promptFor("enter their age, height, weight, occupation, and eye color. Each entry should be followed by a ',' with no spaces. If you dont know one of them, just type a 'n/a' or '0'.",chars);
   var searchByTrait = searchValue.split(",");
   return searchByTrait;
 }
-function executeSearchHeight(people,searchCrit) { //height filter; returns list.
+
+//-----------------------------------------------Search Age -------------------------------------------------------//
+
+function executeSearchAge(people,searchCrit) { //height filter; returns list.
   var listOfPeople = people;
-    if (searchCrit[1] == 0) {
+    if (searchCrit[0] == "0") {
+      return listOfPeople;
+    }
+    else {
+    var newList = listOfPeople.filter(function(findAge,i,people){
+                    var birthday = new Date(people[i].dob);
+                    var today = new Date();
+                    var difference = today - birthday;
+                    var age = (Math.floor(difference/31557600000));
+                    if (age == searchCrit[0]) {
+                      return people[i];
+                    }
+                    else {
+                      i++;
+                    }
+                  });
+    return newList;
+}
+}
+
+//-----------------------------------------------Search Age -------------------------------------------------------//
+
+function executeSearchHeight(newList,searchCrit) { //height filter; returns list.
+  var listOfPeople = newList;
+    if (searchCrit[1] == "0") {
       return listOfPeople;
     }
     else {
@@ -109,7 +136,7 @@ function executeSearchHeight(people,searchCrit) { //height filter; returns list.
 }
 function executeSearchWeight(newList,searchCrit) { //weight filter; returns updated list.
   var listOfPeople = newList;
-  if (searchCrit[2] == 0) {
+  if (searchCrit[2] == "0") {
     return listOfPeople;
   }
   else {
@@ -119,7 +146,7 @@ function executeSearchWeight(newList,searchCrit) { //weight filter; returns upda
 }
 function executeSearchOccupation(newList,searchCrit) { //occupation filter; returns updated list.
   var listOfPeople = newList;
-  if (searchCrit[3] == 0) {
+  if (searchCrit[3] == "0") {
     return listOfPeople;
   }
   else {
@@ -129,7 +156,7 @@ function executeSearchOccupation(newList,searchCrit) { //occupation filter; retu
 }
 function executeSearchEyeColor(newList,searchCrit) { //eye color filter; returns updated list.
   var listOfPeople = newList;
-  if (searchCrit[4] == 0) {
+  if (searchCrit[4] == "0") {
     return listOfPeople;
   }
   else {
@@ -138,7 +165,8 @@ function executeSearchEyeColor(newList,searchCrit) { //eye color filter; returns
   }
 }
 var searchCrit = searchByTrait(people);
-var heightSearch = executeSearchHeight(people,searchCrit);
+var ageSearch = executeSearchAge(people,searchCrit);
+var heightSearch = executeSearchHeight(ageSearch,searchCrit);
 var weightSearch = executeSearchWeight(heightSearch,searchCrit);
 var occupationSearch = executeSearchOccupation(weightSearch,searchCrit);
 var filteredPeople = executeSearchEyeColor(occupationSearch,searchCrit);
@@ -163,7 +191,7 @@ function displayPersonInfo(person){
   personInfo += "Gender: " + person.gender + "\n";
   personInfo += "Date of Birth: " + person.dob + "\n";
   personInfo += "Height: " + person.height  + "\"" + "\n";
-  personInfo += "Weight: " + person.weight + " Lbs" + "\n"; 
+  personInfo += "Weight: " + person.weight + " Lbs" + "\n";
   personInfo += "Eye Color: " + person.eyeColor + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
 
@@ -181,7 +209,7 @@ function displayPersonFamily(person, people){
      } else {
         personFamily += person.firstName + "\'s " + "child is " + childName + "\n";
           }
-           
+
   alert(personFamily);
 }
 
@@ -189,7 +217,7 @@ function getSpouse(person, people) {
   for (var i = 0; i < people.length; i++){
      if ((person.currentSpouse) === (people[i].id)) {
         var spouseIdName = (people[i].firstName + " " + people[i].lastName);
-    } 
+    }
   }
   return spouseIdName;
 }
@@ -222,8 +250,3 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
-
-
-
-
-
