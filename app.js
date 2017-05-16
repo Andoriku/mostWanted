@@ -102,7 +102,7 @@ function executeSearchAge(people,searchCrit) { //height filter; returns list.
       return listOfPeople;
     }
     else {
-    var newList = listOfPeople.filter(function(findAge,i,people){
+    var ageFilterList = listOfPeople.filter(function(findAge,i,people){
                     var birthday = new Date(people[i].dob);
                     var today = new Date();
                     var difference = today - birthday;
@@ -114,62 +114,62 @@ function executeSearchAge(people,searchCrit) { //height filter; returns list.
                       i++;
                     }
                   });
-    return newList;
+    return ageFilterList;
 }
 }
 
 //-----------------------------------------------Search height -------------------------------------------------------//
 
-function executeSearchHeight(newList,searchCrit) { //height filter; returns list.
-  var listOfPeople = newList;
+function executeSearchHeight(ageFilterList,searchCrit) { //height filter; returns list.
+  var listOfPeople = ageFilterList;
     if (searchCrit[1] == "0") {
       return listOfPeople;
     }
     else {
-  var newList = listOfPeople.filter(function(person){ return person.height == searchCrit[1]});
-    return newList;
+  var heightFilterList = listOfPeople.filter(function(person){ return person.height == searchCrit[1]});
+    return heightFilterList;
   }
 }
 
 //-----------------------------------------------Search weight -------------------------------------------------------//
 
 
-function executeSearchWeight(newList,searchCrit) {
-  var listOfPeople = newList;
+function executeSearchWeight(heightFilterList,searchCrit) {
+  var listOfPeople = heightFilterList;
   if (searchCrit[2] == "0") {
     return listOfPeople;
   }
   else {
-  var newList = listOfPeople.filter(function(person){ return person.weight == searchCrit[2]});
-    return newList;
+  var weightFilterList = listOfPeople.filter(function(person){ return person.weight == searchCrit[2]});
+    return weightFilterList;
   }
 }
 
 //-----------------------------------------------Search occupation -------------------------------------------------------//
 
 
-function executeSearchOccupation(newList,searchCrit) {
-  var listOfPeople = newList;
+function executeSearchOccupation(weightFilterList,searchCrit) {
+  var listOfPeople = weightFilterList;
   if (searchCrit[3] == "0") {
     return listOfPeople;
   }
   else {
-  var newList = listOfPeople.filter(function(person){ return person.occupation == searchCrit[3]});
-    return newList;
+  var occupationFilterList = listOfPeople.filter(function(person){ return person.occupation == searchCrit[3]});
+    return occupationFilterList;
   }
 }
 
 //-----------------------------------------------Search eye color -------------------------------------------------------//
 
 
-function executeSearchEyeColor(newList,searchCrit) {
-  var listOfPeople = newList;
+function executeSearchEyeColor(occupationFilterList,searchCrit) {
+  var listOfPeople = occupationFilterList;
   if (searchCrit[4] == "0") {
     return listOfPeople;
   }
   else {
-  var newList = listOfPeople.filter(function(person){ return person.eyeColor == searchCrit[4]});
-    return newList;
+  var eyeColorFilter = listOfPeople.filter(function(person){ return person.eyeColor == searchCrit[4]});
+    return eyeColorFilterList;
   }
 }
 
