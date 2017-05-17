@@ -204,9 +204,13 @@ function displayPersonFamily(person, people) {
   var noSiblings = "This person does not have any siblings." + "\n";
     if (siblingNameArray === undefined || 0 || null){
         personFamily += noSiblings;
-      } else {
-        personFamily += person.firstName + "\'s " + "sibling(s) are" + siblingNameArray.toString() + "." + "\n";
-      }
+      } 
+        else if (siblingNameArray.length === 0){
+            personFamily += noSiblings;
+        }
+          else {
+            personFamily += person.firstName + "\'s " + "sibling(s) are" + siblingNameArray.toString() + "." + "\n";
+           }
   alert(personFamily);
 }
 
