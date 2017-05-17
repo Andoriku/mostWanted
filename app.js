@@ -272,8 +272,13 @@ function displayDescendents(person, people){
                   }
                return descendents;
     }
+      var NoDescendents = "This person does not have any descendents."
       var descendents = findDescendents(person, people);
+        if (descendents.length === 0) {
+            alert(NoDescendents);
+        } else {
       alert("These are " + person.firstName + "\'s descendents: " + "\n" + descendents);
+    }
 }
 
 function promptFor(question, valid){
