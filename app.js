@@ -181,7 +181,7 @@ function displayPersonInfo(person, people){
 }
 
 function displayPersonFamily(person, people) {
-  var personFamily =  "PERSON FAMILY" + "\n";
+  var personFamily = person.firstName + "\'s Family Members are:" + "\n";
 
   var spouseIdName = getSpouse(person, people);
   var noSpouse = "This person is not married." + "\n";
