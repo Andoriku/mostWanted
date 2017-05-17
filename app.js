@@ -88,6 +88,9 @@ function executeSearchAge(people,searchCrit) {
     if (searchCrit[0] == "0") {
       return listOfPeople;
     }
+    else if (searchCrit[0] == "n/a") {
+      return listOfPeople;
+    }
     else {
     var ageFilterList = listOfPeople.filter(function(findAge,i,people){
                     var birthday = new Date(people[i].dob);
@@ -110,6 +113,9 @@ function executeSearchHeight(ageFilterList,searchCrit) {
     if (searchCrit[1] == "0") {
       return listOfPeople;
     }
+    else if (searchCrit[1] == "n/a") {
+      return listOfPeople;
+    }
     else {
   var heightFilterList = listOfPeople.filter(function(person){ return person.height == searchCrit[1]});
     return heightFilterList;
@@ -119,6 +125,9 @@ function executeSearchHeight(ageFilterList,searchCrit) {
 function executeSearchWeight(heightFilterList,searchCrit) {
   var listOfPeople = heightFilterList;
   if (searchCrit[2] == "0") {
+    return listOfPeople;
+  }
+  else if (searchCrit[2] == "n/a") {
     return listOfPeople;
   }
   else {
@@ -132,6 +141,9 @@ function executeSearchOccupation(weightFilterList,searchCrit) {
   if (searchCrit[3] == "0") {
     return listOfPeople;
   }
+  else if (searchCrit[3] == "n/a") {
+    return listOfPeople;
+  }
   else {
   var occupationFilterList = listOfPeople.filter(function(person){ return person.occupation == searchCrit[3]});
     return occupationFilterList;
@@ -141,6 +153,9 @@ function executeSearchOccupation(weightFilterList,searchCrit) {
 function executeSearchEyeColor(occupationFilterList,searchCrit) {
   var listOfPeople = occupationFilterList;
   if (searchCrit[4] == "0") {
+    return listOfPeople;
+  }
+  else if (searchCrit[4] == "n/a") {
     return listOfPeople;
   }
   else {
@@ -204,7 +219,7 @@ function displayPersonFamily(person, people) {
   var noSiblings = "This person does not have any siblings." + "\n";
     if (siblingNameArray === undefined || 0 || null){
         personFamily += noSiblings;
-      } 
+      }
         else if (siblingNameArray.length === 0){
             personFamily += noSiblings;
         }
